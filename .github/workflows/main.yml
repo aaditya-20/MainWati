@@ -3,6 +3,7 @@ name: main
 on:
   pull_request:
   #push:
+  #to check whether its run again or not
   
 jobs:  
   build: 
