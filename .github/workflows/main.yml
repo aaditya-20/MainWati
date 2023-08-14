@@ -2,6 +2,9 @@ name: main
 
 on:
   pull_request:
+   branches:
+        - 'main'
+        - 'master'
   #push:
   
 jobs:  
