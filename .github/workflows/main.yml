@@ -2,17 +2,14 @@ name: main
 
 on:
   pull_request:
-    branches:
-        - 'main'
-        - 'master'
+    
+     
   #push:
-  
+
 jobs:  
   build: 
-    
     runs-on: ubuntu-latest
     steps:
-    
     - uses: mdecoleman/pr-branch-name@1.2.0
       id: vars
       with:
@@ -41,5 +38,27 @@ jobs:
         propagate_failure: true
         trigger_workflow: true
         wait_workflow: true
-        comment_downstream_url: ${{ github.event.pull_request.comments_url }} 
-      
+        comment_downstream_url: ${{ github.event.pull_request.comments_url }}
+    
+    - name: Get Test Report Link from Test Repo
+      id: get_report_link
+      run: |
+        REPORT_URL=$(curl -s "https://api.github.com/repos/aaditya-20/TestWati/actions/runs?event=workflow_run_completed&status=completed" \
+          -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
+          | jq -r '.workflow_runs[0].artifacts_url')
+        echo "::set-output name=report_url::$REPORT_URL"
+          
+    - name: Comment on PR with Test Report Link
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.PAT_TOKEN }}
+        script: |
+          const reportLink = `Test report: [View Report](${process.env.REPORT_URL})`;
+          const prNumber = context.payload.pull_request.number;
+          const octokit = github.getOctokit(token);
+          octokit.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: prNumber,
+            body: reportLink
+          });
