@@ -49,16 +49,9 @@ jobs:
         echo "::set-output name=report_url::$REPORT_URL"
           
     - name: Comment on PR with Test Report Link
-      uses: actions/github-script@v4
+      uses: thollander/actions-comment-pull-request@v2
       with:
-        github-token: ${{ secrets.PAT_TOKEN }}
-        script: |
-          const reportLink = `Test report: [View Report](${process.env.REPORT_URL})`;
-          const prNumber = context.payload.pull_request.number;
-          const octokit = github.getOctokit(context.token);
-          octokit.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: prNumber,
-            body: reportLink
-          });
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        message: |
+           Hello world ! :wave:
+        comment_tag: execution
