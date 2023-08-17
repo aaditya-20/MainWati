@@ -55,7 +55,7 @@ jobs:
         script: |
           const reportLink = `Test report: [View Report](${process.env.REPORT_URL})`;
           const prNumber = context.payload.pull_request.number;
-          const octokit = github.getOctokit(token);
+          const octokit = github.getOctokit(context.token);
           octokit.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
