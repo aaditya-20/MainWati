@@ -53,5 +53,5 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         message: |
-           Hello world ! :wave:
+           'Hello world ! :wave:  ${{ steps.get_report_link.outputs.report_url }}'
         comment_tag: execution
