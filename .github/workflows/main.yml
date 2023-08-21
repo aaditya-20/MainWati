@@ -40,18 +40,4 @@ jobs:
         wait_workflow: true
         comment_downstream_url: ${{ github.event.pull_request.comments_url }}
     
-    - name: Get Test Report Link from Test Repo
-      id: get_report_link
-      run: |
-        REPORT_URL=$(curl -s "https://api.github.com/repos/aaditya-20/TestWati/actions/runs?event=workflow_run_completed&status=completed" \
-          -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
-          | jq -r '.workflow_runs[0].artifacts_url')
-        echo "::set-output name=report_url::$REPORT_URL"
-          
-    - name: Comment on PR with Test Report Link
-      uses: thollander/actions-comment-pull-request@v2
-      with:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        message: |
-           'Hello world ! :wave:  ${{ steps.get_report_link.outputs.report_url }}'
         
