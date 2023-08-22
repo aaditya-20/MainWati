@@ -3,7 +3,6 @@ name: main
 on:
   pull_request:
     branches:
-        - 'main'
         - 'master'
   #push:
   
@@ -26,6 +25,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x   
+        
+    - name: Checking echo 
+      run:  echo "this code line is inside the new branch"
        
     - name: Executing Regression Tests 
       uses: convictional/trigger-workflow-and-wait@v1.6.5
