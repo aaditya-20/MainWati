@@ -5,7 +5,7 @@ on:
     branches:
         - 'main'
         - 'master'
-  #push:
+  # push:
   
 jobs:  
   build: 
@@ -33,7 +33,7 @@ jobs:
         owner: aaditya-20
         repo: TestWati
         github_token: ${{ secrets.PAT_TOKEN }}
-        github_user: aaditya-20
+        github_user: vishal-20
         workflow_file_name: main.yml
         ref: master
         wait_interval: 10
